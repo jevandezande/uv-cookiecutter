@@ -225,13 +225,13 @@ def git_add_remote(remote: str, url: str, protocol: PROTOCOL = "git") -> None:
     call(f"git remote add {remote} {url}")
 
 
-def github_setup(privacy: str, remote: str = "origin", default_branch: str | None = None) -> None:
+def github_setup(privacy: str, remote: str = "origin", default_branch: str = "master") -> None:
     """
     Make a repository on GitHub (requires GitHub CLI).
 
     :param privacy: privacy of the repository ("private", "internal", "public")
     :param remote: name of the remote to add
-    :param default_branch: name of the default branch for upstream (defaults to global git config)
+    :param default_branch: name of the default branch for upstream
     """
     if privacy not in GITHUB_PRIVACY_OPTIONS:
         raise ValueError(f"{privacy=} not in {GITHUB_PRIVACY_OPTIONS}")
@@ -245,21 +245,9 @@ def github_setup(privacy: str, remote: str = "origin", default_branch: str | Non
     except subprocess.CalledProcessError as e:
         logger.error(f"Error creating GitHub repository, likely already exists: {e}")
 
-    if not default_branch:
-        stdout = call(
-            "git config --global init.defaultBranch", text=True, stdout=subprocess.PIPE
-        ).stdout
-
-        if isinstance(stdout, bytes):
-            default_branch = stdout.decode("utf-8").strip()
-        else:
-            default_branch = stdout.strip()
-
-        default_branch = default_branch or "master"
-
     try:
-        call("git config branch.master.remote origin")
-        call("git config branch.master.merge refs/heads/master")
+        call(f"git config branch.{default_branch}.remote {remote}")
+        call(f"git config branch.{default_branch}.merge refs/heads/{default_branch}")
     except subprocess.CalledProcessError as e:
         logger.error(f"Error setting upstream to {default_branch}: {e}")
 
