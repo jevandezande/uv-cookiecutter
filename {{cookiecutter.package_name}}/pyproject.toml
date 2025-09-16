@@ -27,7 +27,7 @@ dev = { features = ["dev"], solve-group = "default"}
 [tool.pixi.feature.dev.tasks]
 fmt = { cmd="ruff format ." }
 lint = { cmd="ruff check . --fix" }
-types = { cmd="mypy" }
+types = { cmd="ty check" }
 test = { cmd="pytest" }
 all = { depends-on = ["fmt", "lint", "types", "test"] }
 
@@ -35,9 +35,11 @@ all = { depends-on = ["fmt", "lint", "types", "test"] }
 pytest = ">=8.3"
 pytest-cov = ">=6.0"
 ruff = ">=0.11"
-mypy = ">=1.15"
 pre-commit = ">=4.2"
 {pixi_test_dependencies}
+
+[tool.pixi.feature.dev.pypi-dependencies]
+ty = "*"
 
 [tool.ruff]
 line-length = {{cookiecutter.line_length}}
@@ -77,11 +79,6 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
-
-[tool.mypy]
-files = ["{{cookiecutter.package_name}}", "tests"]
-strict = true
-pretty = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "{{cookiecutter.package_name}}"]
