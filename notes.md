@@ -50,8 +50,7 @@ pixi global install act
 ```
 
 ### Direnv
-[direnv](https://pixi.sh/latest/features/environment/#using-pixi-with-direnv)
-can automagically load environment variables and the pixi shell.
+[direnv](https://pixi.sh/latest/integration/third_party/direnv) can automagically load environment variables and the pixi shell.
 
 #### Installing direnv
 ```sh

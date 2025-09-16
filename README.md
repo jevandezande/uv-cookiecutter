@@ -47,7 +47,7 @@ The cookiecutter will automagically
 ## Recommendations
 - Make a custom config file (see [template_config.yml](template_config.yml)).
 - Install [act](https://github.com/nektos/act) to run GitHub Actions locally.
-- Install [direnv](https://pixi.sh/latest/features/environment/#using-pixi-with-direnv) to automagically load the environment.
+- Install [direnv](https://pixi.sh/latest/integration/third_party/direnv) to automagically load the environment.
 
 Read [notes](notes.md) for more tips.
 
