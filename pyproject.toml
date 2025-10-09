@@ -2,7 +2,7 @@
 name = "pixi_cookiecutter"
 description = "Cookiecutter for setting up python projects with pixi that just work"
 license = {file = "LICENSE"}
-version = "0.0.1"
+version = "0.1.0"
 readme = "README.md"
 keywords = ["cookiecutter", "pixi"]
 authors = [{name = "Jonathon Vandezande"}]
