@@ -8,7 +8,7 @@ keywords = ["cookiecutter", "pixi"]
 authors = [{name = "Jonathon Vandezande"}]
 requires-python = ">=3.12"
 
-[tool.pixi.project]
+[tool.pixi.workspace]
 channels = ["conda-forge"]
 platforms = ["linux-64", "osx-arm64"]
 
