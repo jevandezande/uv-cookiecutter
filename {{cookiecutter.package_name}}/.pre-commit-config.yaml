@@ -1,10 +1,11 @@
-exclude: '.pixi/'
+exclude: '.venv'
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0  # this is optional, use `pre-commit autoupdate` to get the latest rev!
+  rev: v6.0.0
   hooks:
     - id: check-yaml
     - id: check-toml
+      exclude: "{{cookiecutter.package_name}}/pyproject.toml"
     - id: end-of-file-fixer
     - id: trailing-whitespace
 
@@ -14,7 +15,7 @@ repos:
     name: ruff-format
     stages: [pre-commit, pre-push]
     language: system
-    entry: pixi run fmt
+    entry: uv run ruff format .
     types: [python]
     pass_filenames: false
 
@@ -22,7 +23,7 @@ repos:
     name: ruff-check
     stages: [pre-commit, pre-push]
     language: system
-    entry: pixi run lint
+    entry: uv run ruff check .
     types: [python]
     pass_filenames: false
 
@@ -30,7 +31,7 @@ repos:
     name: ty
     stages: [pre-commit, pre-push]
     language: system
-    entry: pixi run types
+    entry: uv run ty check
     types: [python]
     pass_filenames: false
 
@@ -38,6 +39,6 @@ repos:
     name: pytest
     stages: [pre-commit, pre-push]
     language: system
-    entry: pixi run test
+    entry: uv run pytest
     types: [python]
     pass_filenames: false

@@ -137,30 +137,30 @@ def process_dependencies(deps: str) -> str:
     >>> process_dependencies(' ')
     ''
     >>> process_dependencies("pytest matplotlib@~3.7 black@!=1.2.3")
-    'pytest = "*"\nmatplotlib = "~3.7"\nblack = "!=1.2.3"\n'
+    '    pytest = "*",\n    matplotlib = "~3.7",\n    black = "!=1.2.3",\n'
     """
     if not deps.strip():
         return ""
 
-    return "\n".join(map(process_dependency, deps.split())) + "\n"
+    return "".join(f"    {process_dependency(dep)},\n" for dep in deps.split())
 
 
 def update_dependencies() -> None:
-    """Add and update the dependencies in pyproject.toml and pixi.lock."""
+    """Add and update the dependencies in pyproject.toml and uv.lock."""
     # Extra space and .strip() avoids accidentally creating '""""'
-    dependencies = process_dependencies("""{{cookiecutter.pixi_dependencies}} """.strip())
-    dev_dependencies = process_dependencies("""{{cookiecutter.pixi_test_dependencies}} """.strip())
+    dependencies = process_dependencies("""{{cookiecutter.dependencies}} """.strip())
+    dev_dependencies = process_dependencies("""{{cookiecutter.dev_dependencies}} """.strip())
 
     with open("pyproject.toml") as f:
         contents = (
             f.read()
-            .replace("{pixi_dependencies}\n", dependencies)
-            .replace("{pixi_test_dependencies}\n", dev_dependencies)
+            .replace("    {dependencies}\n", dependencies)
+            .replace("    {dev_dependencies}\n", dev_dependencies)
         )
     with open("pyproject.toml", "w") as f:
         f.write(contents)
 
-    call("pixi update")
+    call("uv sync")
 
 
 def check_program(program: str, install_str: str) -> None:
@@ -170,7 +170,7 @@ def check_program(program: str, install_str: str) -> None:
     :param program: name of the program to check
     :param install_str: string to print if the program is not installed
 
-    >>> check_program("python", "https://www.python.org/")
+    >>> check_program("python", "https://www.python.org")
     >>> check_program("this_program_does_not_exist", "nothing")
     Traceback (most recent call last):
     ...
@@ -192,7 +192,7 @@ def allow_direnv() -> None:
 
 def git_hooks() -> None:
     """Install pre-commit and pre-push hooks."""
-    call("pixi run -e dev pre-commit install")
+    call("uv run pre-commit install")
 
 
 def git_initial_commit() -> None:

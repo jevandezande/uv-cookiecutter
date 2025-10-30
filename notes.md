@@ -1,27 +1,6 @@
 # Notes
-## Configuring Pixi
 
-If installing programs with pixi (recommended), make sure that `~/.pixi/bin`
-is in your path by adding the following to your .zshrc/.bashrc/.profile
-```sh
-export PATH=$PATH:~/.pixi/bin
-```
-### Installing pixi
-```sh
-curl -fsSL https://pixi.sh/install.sh | bash
-```
-
-## Cookiecutter
-While cookiecutter doesn't need to be installed globally if running the
-cookiecutter from within this project, it is needed if you want to run this
-cookiecutter without separately downloading it.
-
-### Installing cookiecutter
-```sh
-pixi global install cookiecutter
-```
-
-## Configuring Pixi Cookiecutter
+## Configuring UV Cookiecutter
 Make a [config file](https://cookiecutter.readthedocs.io/en/stable/advanced/user_config.html)
 (see [template_config.yml](template_config.yml)) with default settings and save
 it as a `.cookiecutterrc` or use it directly via: `--config-file cookiecutter.yml`
@@ -50,7 +29,7 @@ pixi global install act
 ```
 
 ### Direnv
-[direnv](https://pixi.sh/latest/integration/third_party/direnv) can automagically load environment variables and the pixi shell.
+[direnv](https://direnv.net) can automagically load environment variables.
 
 #### Installing direnv
 ```sh
@@ -86,7 +65,7 @@ curl -sS https://webi.sh/gh | sh
 on `git commit`.
 
 #### Installing pre-commit
-Pre-commit comes installed with the pixi package, but if you want to install it
+Pre-commit comes installed with the uv package, but if you want to install it
 globally:
 ```sh
 pixi global install pre-commit
