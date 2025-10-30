@@ -26,8 +26,8 @@ repos:
     types: [python]
     pass_filenames: false
 
-  - id: Mypy
-    name: mypy
+  - id: Ty
+    name: ty
     stages: [pre-commit, pre-push]
     language: system
     entry: pixi run types
