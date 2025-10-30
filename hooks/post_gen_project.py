@@ -93,56 +93,23 @@ def git_init() -> None:
     call("git init")
 
 
-def process_dependency(dependency: str) -> str:
-    """
-    Process a dependency.
-
-    :param dependency: dependency to process
-    :return: processed dependency in the format 'package = "version"'
-
-    >>> process_dependency("pytest")
-    'pytest = "*"'
-    >>> process_dependency("matplotlib@>=3.7.2")
-    'matplotlib = ">=3.7.2"'
-    >>> process_dependency("more-itertools@10.*")
-    'more-itertools = "10.*"'
-    >>> process_dependency("")
-    Traceback (most recent call last):
-    ...
-    ValueError: Blank dependency
-    >>> process_dependency("hello@1.2.3@v40")
-    Traceback (most recent call last):
-    ...
-    ValueError: Unable to process dependency='hello@1.2.3@v40'
-    """
-    if not dependency:
-        raise ValueError("Blank dependency")
-
-    match dependency.split("@"):
-        case [package]:
-            return f'{package} = "*"'
-        case [package, version]:
-            return f'{package} = "{version}"'
-        case _:
-            raise ValueError(f"Unable to process {dependency=}")
-
-
 def process_dependencies(deps: str) -> str:
     r"""
     Process a space separated list of dependencies.
 
     :param deps: dependencies to process
-    :return: processed dependencies in the format 'package = "version"'
+    :param sep: separator between dependencies
+    :return: processed dependencies in the format '"package=version",\n...'
 
     >>> process_dependencies(' ')
     ''
-    >>> process_dependencies("pytest matplotlib@~3.7 black@!=1.2.3")
-    '    pytest = "*",\n    matplotlib = "~3.7",\n    black = "!=1.2.3",\n'
+    >>> process_dependencies("pytest matplotlib~=3.7 black!=1.2.3")
+    '    "pytest",\n    "matplotlib~=3.7",\n    "black!=1.2.3",\n'
     """
     if not deps.strip():
         return ""
 
-    return "".join(f"    {process_dependency(dep)},\n" for dep in deps.split())
+    return "".join(f'    "{dep}",\n' for dep in deps.split())
 
 
 def update_dependencies() -> None:

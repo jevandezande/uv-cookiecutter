@@ -11,7 +11,7 @@
     "github_setup": ["None", "private", "internal", "public"],
     "_copy_without_render": [".github/workflows"],
     "__prompts__": {
-        "dependencies": "PyPI dependencies (e.g. numpy scipy@1.14.*)",
-        "dev_dependencies": "PyPI dev dependencies (e.g. pytest-xdist@>=3.6)"
+        "dependencies": "PyPI dependencies (e.g. numpy scipy==1.14.*)",
+        "dev_dependencies": "PyPI dev dependencies (e.g. pytest-xdist>=3.6)"
     }
 }
