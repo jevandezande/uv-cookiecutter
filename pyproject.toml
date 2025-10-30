@@ -1,7 +1,7 @@
 [project]
 name = "pixi_cookiecutter"
 description = "Cookiecutter for setting up python projects with pixi that just work"
-license = {file = "LICENSE"}
+license = "MIT"
 version = "0.1.0"
 readme = "README.md"
 keywords = ["cookiecutter", "pixi"]

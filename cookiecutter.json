@@ -7,7 +7,7 @@
     "pixi_dependencies": "",
     "pixi_test_dependencies": "",
     "line_length": "100",
-    "license": ["MIT", "APL-2.0", "BSD-3-clause", "MPL-2.0", "None"],
+    "license": ["MIT", "APL-2.0", "BSD-3-clause", "None"],
     "github_setup": ["None", "private", "internal", "public"],
     "_copy_without_render": [".github/workflows"],
     "__prompts__": {

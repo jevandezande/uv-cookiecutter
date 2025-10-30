@@ -63,10 +63,14 @@ def set_license(license: str | None = "MIT") -> None:
         logger.debug("No license set")
         return
 
-    license = license.lower()
-    licenses = [lic.name for lic in Path("licenses").iterdir()]
+    licenses = {lic.name for lic in Path("licenses").iterdir()}
     if license not in licenses:
-        raise ValueError(f"{license=} is not available yet. Please select from:\n{licenses=}")
+        try:
+            # Check and correct cases
+            license = next(lic for lic in licenses if lic.lower() == license.lower())
+            logger.warning(f"Corrected license to {license=}")
+        except StopIteration as e:
+            raise ValueError(f"{license=} not available; select from:\n{licenses}") from e
 
     shutil.copy(f"licenses/{license}", "LICENSE")
 
