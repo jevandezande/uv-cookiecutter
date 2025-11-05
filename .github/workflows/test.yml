@@ -1,4 +1,4 @@
-name: Test uv Cookiecutter
+name: Test UV Cookiecutter
 
 on:
   pull_request: {}
