@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 from datetime import datetime
+from enum import Enum
 from pathlib import Path
 from shutil import rmtree
 from typing import Any, Literal
@@ -16,6 +17,12 @@ logger.setLevel(logging.INFO)
 PROTOCOL = Literal["git", "https"]
 GITHUB_PRIVACY_OPTIONS = ["private", "internal", "public"]
 MINIMUM_PYTHON_MINOR_VERSION = 12
+
+
+class CodingAgent(str, Enum):
+    """Coding agents supported."""
+
+    CLAUDE = "claude"
 
 
 def call(cmd: str, check: bool = True, **kwargs: Any) -> subprocess.CompletedProcess[bytes]:
@@ -55,7 +62,7 @@ def set_python_version() -> None:
 
 def set_license(license: str | None = "MIT") -> None:
     """
-    Copy the licese file to LICENSE (if any).
+    Copy the license file to LICENSE (if any).
 
     :param license: name of the license (or None for no license)
     """
@@ -63,7 +70,7 @@ def set_license(license: str | None = "MIT") -> None:
         logger.debug("No license set")
         return
 
-    licenses = {lic.name for lic in Path("licenses").iterdir()}
+    licenses = {lic.name for lic in Path("data/licenses").iterdir()}
     if license not in licenses:
         try:
             # Check and correct cases
@@ -72,7 +79,7 @@ def set_license(license: str | None = "MIT") -> None:
         except StopIteration as e:
             raise ValueError(f"{license=} not available; select from:\n{licenses}") from e
 
-    shutil.copy(f"licenses/{license}", "LICENSE")
+    shutil.copy(f"data/licenses/{license}", "LICENSE")
 
     with open("LICENSE") as f:
         contents = f.read().replace("{year}", f"{datetime.now().year}")
@@ -81,11 +88,6 @@ def set_license(license: str | None = "MIT") -> None:
         f.write(contents)
 
     logger.debug(f"Set {license=}")
-
-
-def remove_license_dir() -> None:
-    """Remove the licenses directory."""
-    rmtree("licenses")
 
 
 def git_init() -> None:
@@ -130,7 +132,7 @@ def update_dependencies() -> None:
     call("uv sync")
 
 
-def check_program(program: str, install_str: str) -> None:
+def check_program(program: str, install_str: str, **run_kwargs: Any) -> None:
     """
     Check that a program is installed.
 
@@ -144,7 +146,7 @@ def check_program(program: str, install_str: str) -> None:
     OSError: this_program_does_not_exist is not installed; install with `nothing`
     """
     try:
-        call(program, stdout=subprocess.DEVNULL)
+        call(program, stdout=subprocess.DEVNULL, **run_kwargs)
     except FileNotFoundError as e:
         raise OSError(f"{program} is not installed; install with `{install_str}`") from e
     except subprocess.CalledProcessError as e:
@@ -160,6 +162,31 @@ def allow_direnv() -> None:
 def git_hooks() -> None:
     """Install pre-commit and pre-push hooks."""
     call("uv run pre-commit install")
+
+
+def setup_coding_agent(coding_agent: CodingAgent | None) -> None:
+    """Set up coding agent."""
+    if not coding_agent:
+        return
+    logger.info("Setting up {coding_agent} coding agent.")
+    match coding_agent:
+        case CodingAgent.CLAUDE:
+            logger.info("Type /init in claude to finish setup and then exit.")
+            shutil.copytree("data/.claude", ".claude")
+            try:
+                call(str(Path("~").expanduser() / ".claude/local/claude"))
+            except FileNotFoundError as e:
+                raise OSError(
+                    "claude failed to run, check if installed in `~/.claude/local/claude`\n"
+                    "or install with: `npm install -g @anthropic-ai/claude-code`"
+                ) from e
+        case _:
+            raise ValueError(f"Unknown AI agent: {coding_agent}")
+
+
+def remove_data_dir() -> None:
+    """Remove the data directory."""
+    rmtree("data")
 
 
 def git_initial_commit() -> None:
@@ -243,11 +270,13 @@ def main() -> None:
     """Run the post generation hooks."""
     set_python_version()
     set_license("{{cookiecutter.license}}")
-    remove_license_dir()
     git_init()
     update_dependencies()
     allow_direnv()
     git_hooks()
+    if (agent := "{{cookiecutter.coding_agent}}".lower()) != "none":
+        setup_coding_agent(CodingAgent(agent))
+    remove_data_dir()
     git_initial_commit()
     setup_remote("origin")
 
