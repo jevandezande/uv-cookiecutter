@@ -9,7 +9,7 @@
     "line_length": "100",
     "license": ["MIT", "APL-2.0", "BSD-3-clause", "None"],
     "github_setup": ["None", "private", "internal", "public"],
-    "coding_agent": ["None", "Claude"],
+    "coding_agent": ["None", "Claude", "Codex"],
     "_copy_without_render": [".github/workflows"],
     "__prompts__": {
         "dependencies": "PyPI dependencies (e.g. numpy scipy==1.14.*)",

@@ -23,6 +23,7 @@ class CodingAgent(str, Enum):
     """Coding agents supported."""
 
     CLAUDE = "claude"
+    CODEX = "codex"
 
 
 def call(cmd: str, check: bool = True, **kwargs: Any) -> subprocess.CompletedProcess[bytes]:
@@ -175,6 +176,14 @@ def setup_coding_agent(coding_agent: CodingAgent | None) -> None:
             shutil.copytree("data/.claude", ".claude")
             try:
                 call(str(Path("~").expanduser() / ".claude/local/claude"))
+            except FileNotFoundError as e:
+                raise OSError(
+                    "claude failed to run, check if installed in `~/.claude/local/claude`\n"
+                    "or install with: `npm install -g @anthropic-ai/claude-code`"
+                ) from e
+        case CodingAgent.CODEX:
+            try:
+                call("codex")
             except FileNotFoundError as e:
                 raise OSError(
                     "claude failed to run, check if installed in `~/.claude/local/claude`\n"
