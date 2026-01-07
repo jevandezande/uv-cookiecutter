@@ -1,9 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(uv run ruff:*)",
-      "Bash(uv run ty:*)",
-      "Bash(uv run pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(ty:*)",
+      "Bash(pytest:*)",
       "Bash(pre-commit run -a:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
@@ -11,5 +11,24 @@
     ],
     "deny": [],
     "ask": []
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ruff format .",
+            "statusMessage": "Formatting with ruff"
+          },
+          {
+            "type": "command",
+            "command": "ruff check . --fix",
+            "statusMessage": "Running ruff checks"
+          }
+        ]
+      }
+    ]
   }
 }
