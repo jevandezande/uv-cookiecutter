@@ -196,7 +196,8 @@ def setup_coding_agent(agent: str) -> None:
             logger.info("Type /init in claude to finish setup and then exit.")
             shutil.copytree("data/.claude", ".claude")
             try:
-                call(str(Path("~").expanduser() / ".claude/local/claude"))
+                claude = str(Path("~").expanduser() / ".claude/local/claude")
+                call(f"{claude} /init")
             except FileNotFoundError as e:
                 raise OSError(
                     "claude failed to run, check if installed in `~/.claude/local/claude`\n"
@@ -204,7 +205,9 @@ def setup_coding_agent(agent: str) -> None:
                 ) from e
         case CodingAgent.CODEX:
             try:
-                call("codex")
+                cmd = "codex exec 'Read AGENTS.md and update it'"
+                logger.debug(f"Calling: {cmd}")
+                subprocess.run(cmd, check=True, shell=True)
             except FileNotFoundError as e:
                 raise OSError(
                     "codex failed to run, check if installed\n"
