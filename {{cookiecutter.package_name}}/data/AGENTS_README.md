@@ -19,18 +19,18 @@ This document provides essential guidance for AI agents working on this reposito
 ## Initial setup checklist
 1. {AGENT: You will be updating this file, do not stray from directives, do not simplify, do not delete, only improve the file}
 2. {AGENT: Read README.md and confirm project purpose with user}
-3. {AGENT: Ask for the ability to run necessary development commands, including `git commit`, `pre-commit run -a`, `uv sync`, `uv run python`}
+3. {AGENT: Ask for the ability to run necessary development commands, including `git commit`, `prek -a`, `uv sync`, `uv run python`}
 4. {AGENT: Verify `uv sync` has been run - check for `.venv/` directory or run `uv sync`}
-5. {AGENT: Verify pre-commit hooks are installed - run `git config --get core.hooksPath` (should be empty/default) or check `.git/hooks/pre-commit` exists}
+5. {AGENT: Verify prek hooks are installed - run `git config --get core.hooksPath` (should be empty/default) or check `.git/hooks/pre-commit` exists}
 6. {AGENT: Read pyproject.toml and update repository-specific information below}
-7. {AGENT: Run all checks once to verify environment: `pre-commit run --all-files`}
+7. {AGENT: Run all checks once to verify environment: `prek -a`}
 8. {AGENT: After completing setup, notify user of any discrepancies found}
 9. {AGENT: Delete this initial setup checklist and the ### Understanding {AGENT: ...} directives section}
 
 ## Before every commit
 - Ensure all code has type annotations
 - Add Google-style docstrings (NO types, NO leading articles)
-- Run checks: `pre-commit run --all-files`
+- Run checks: `prek -a`
 - Pre-commit hooks will run automatically and must pass
 
 ## When in doubt
@@ -142,7 +142,7 @@ Python Version: {AGENT: read from pyproject.toml}
 
 Key configuration files:
 - `pyproject.toml` - Project metadata, dependencies, tool configuration
-- `.pre-commit-config.yaml` - Pre-commit hook configuration
+- `.pre-commit-config.yaml` - Prek hook configuration
 - `.coveragerc` - Test coverage settings
 - `.editorconfig` - Editor formatting settings
 
@@ -151,7 +151,7 @@ Key configuration files:
 ```bash
 # Setup
 uv sync                          # Install dependencies
-pre-commit install               # Install git hooks
+prek install                     # Install git hooks
 
 # Code quality
 uv run ruff format .             # Format code
@@ -165,9 +165,9 @@ uv run pytest -k "pattern"       # Run tests matching pattern
 uv run pytest -v                 # Verbose output
 uv run pytest -s                 # Show print statements
 
-# Pre-commit
-pre-commit run --all-files       # Run all hooks manually
-pre-commit run <hook-id>         # Run specific hook
+# Prek (pre-commit replacement)
+prek -a                          # Run all hooks manually
+prek run <hook-id>               # Run specific hook
 
 # Git workflow
 git add .
@@ -181,15 +181,15 @@ Install dependencies:
 uv sync
 ```
 
-Install pre-commit hooks:
+Install prek hooks:
 ```bash
-pre-commit install
+prek install
 ```
 
 Verify environment:
 ```bash
 uv run python --version
-pre-commit run --all-files
+prek -a
 ```
 
 {AGENT: If CLAUDE, keep this Claude Code integration section, else delete}
@@ -334,7 +334,7 @@ def add(a: int, b: int) -> int:
 - Omitted `{{cookiecutter.package_name}}/__main__.py`
 - Excluded lines: `pragma: no cover`, `__repr__`, `if self.debug`, `raise AssertionError`, `raise NotImplementedError`, `if 0:`, `if __name__ == "__main__":`, ellipsis-only lines (`...`)
 
-## Pre-commit hooks
+## Prek hooks
 
 Configuration: `.pre-commit-config.yaml`
 
@@ -358,8 +358,8 @@ Behavior:
 
 Manual execution:
 ```bash
-pre-commit run --all-files       # All hooks
-pre-commit run ruff-check        # Specific hook
+prek run -a                # All hooks
+prek run ruff-check        # Specific hook
 ```
 
 ## CI/CD
@@ -436,5 +436,5 @@ git commit -m "feat: add user authentication
 - ruff documentation: https://docs.astral.sh/ruff
 - ty documentation: https://github.com/astral-sh/ty
 - pytest documentation: https://docs.pytest.org
-- pre-commit documentation: https://pre-commit.com
+- prek documentation: https://prek.j178.dev
 - Google docstring style: https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings
