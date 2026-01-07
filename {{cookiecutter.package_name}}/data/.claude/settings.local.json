@@ -7,7 +7,10 @@
       "Bash(pre-commit run -a:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git switch -c:*)"
+      "Bash(git switch -c:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(rg:*)"
     ],
     "deny": [],
     "ask": []

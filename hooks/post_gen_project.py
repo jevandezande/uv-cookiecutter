@@ -165,11 +165,32 @@ def git_hooks() -> None:
     call("uv run pre-commit install")
 
 
-def setup_coding_agent(coding_agent: CodingAgent | None) -> None:
-    """Set up coding agent."""
-    if not coding_agent:
+def setup_coding_agent(agent: str) -> None:
+    """
+    Set up coding agent including readme and environment.
+
+    :param agent: coding agent name ("claude", "codex", or "none")
+    """
+    if agent.lower() == "none":
         return
-    logger.info("Setting up {coding_agent} coding agent.")
+
+    coding_agent = CodingAgent(agent.lower())
+    logger.info(f"Setting up {coding_agent} coding agent.")
+
+    # Copy agent README to appropriate filename
+    source = Path("data/AGENTS_README.md")
+    match coding_agent:
+        case CodingAgent.CLAUDE:
+            destination = Path("CLAUDE.md")
+        case CodingAgent.CODEX:
+            destination = Path("AGENTS.md")
+        case _:
+            raise ValueError(f"Unsupported coding agent: {coding_agent}")
+
+    shutil.copy(source, destination)
+    logger.info(f"Copied {source} to {destination}")
+
+    # Set up agent environment
     match coding_agent:
         case CodingAgent.CLAUDE:
             logger.info("Type /init in claude to finish setup and then exit.")
@@ -186,11 +207,11 @@ def setup_coding_agent(coding_agent: CodingAgent | None) -> None:
                 call("codex")
             except FileNotFoundError as e:
                 raise OSError(
-                    "claude failed to run, check if installed in `~/.claude/local/claude`\n"
-                    "or install with: `npm install -g @anthropic-ai/claude-code`"
+                    "codex failed to run, check if installed\n"
+                    "or install with appropriate package manager"
                 ) from e
         case _:
-            raise ValueError(f"Unknown AI agent: {coding_agent}")
+            raise ValueError(f"Unsupported coding agent: {coding_agent}")
 
 
 def remove_data_dir() -> None:
@@ -283,8 +304,7 @@ def main() -> None:
     update_dependencies()
     allow_direnv()
     git_hooks()
-    if (agent := "{{cookiecutter.coding_agent}}".lower()) != "none":
-        setup_coding_agent(CodingAgent(agent))
+    setup_coding_agent("{{cookiecutter.coding_agent}}")
     remove_data_dir()
     git_initial_commit()
     setup_remote("origin")
