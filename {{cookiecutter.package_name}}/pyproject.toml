@@ -15,7 +15,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pre-commit>=4.3",
+    "prek>=0.2",
     "pytest>=8.4",
     "pytest-cov>=7.0",
     "ruff>=0.14",

@@ -161,8 +161,8 @@ def allow_direnv() -> None:
 
 
 def git_hooks() -> None:
-    """Install pre-commit and pre-push hooks."""
-    call("uv run pre-commit install")
+    """Install pre-commit and pre-push hooks (via prek)."""
+    call("uv run prek install")
 
 
 def setup_coding_agent(agent: str) -> None:
