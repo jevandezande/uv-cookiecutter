@@ -19,7 +19,7 @@ This document provides essential guidance for AI agents working on this reposito
 ## Initial setup checklist
 1. {AGENT: You will be updating this file, do not stray from directives, do not simplify, do not delete, only improve the file}
 2. {AGENT: Read README.md and confirm project purpose with user}
-3. {AGENT: Ask for the ability to run necessary development commands, including `git commit`, `prek -a`, `uv sync`, `uv run python`}
+3. {AGENT: Ask for the ability to run necessary development commands, including `git commit`, `prek -a`, `uv sync`, `python`}
 4. {AGENT: Verify `uv sync` has been run - check for `.venv/` directory or run `uv sync`}
 5. {AGENT: Verify prek hooks are installed - run `git config --get core.hooksPath` (should be empty/default) or check `.git/hooks/pre-commit` exists}
 6. {AGENT: Read pyproject.toml and update repository-specific information below}
@@ -97,7 +97,7 @@ Requirements
 
 #### Verification
 ```bash
-uv run ty check
+ty check
 ```
 
 ### Code formatting
@@ -133,7 +133,7 @@ Hooks run these checks:
 Purpose: {AGENT must read from README.md and confirm with user}
 
 Structure:
-- `{{cookiecutter.package_name}}` - source code
+- `{{cookiecutter.package_name}}` - source code (this is a flat layout)
 - `tests/` - test suite
 - `.github/workflows/` - CI/CD configuration
 - {AGENT: list other important folders and confirm with user}
@@ -141,7 +141,7 @@ Structure:
 Python Version: {AGENT: read from pyproject.toml}
 
 Key configuration files:
-- `pyproject.toml` - Project metadata, dependencies, tool configuration
+- `pyproject.toml` - Project metadata, dependencies, all tool configuration
 - `.pre-commit-config.yaml` - Prek hook configuration
 - `.coveragerc` - Test coverage settings
 - `.editorconfig` - Editor formatting settings
@@ -150,28 +150,35 @@ Key configuration files:
 
 ```bash
 # Setup
-uv sync                          # Install dependencies
-prek install                     # Install git hooks
+uv sync                         # Install dependencies
+prek install                    # Install git hooks
 
 # Code quality
-uv run ruff format .             # Format code
-uv run ruff check .              # Lint code
-uv run ty check                  # Type check
+ruff format .                   # Format code
+ruff check .                    # Lint code
+ty check                        # Type check
 
 # Testing
-uv run pytest                    # Run tests
-uv run pytest --cov              # Run tests with coverage
-uv run pytest -k "pattern"       # Run tests matching pattern
-uv run pytest -v                 # Verbose output
-uv run pytest -s                 # Show print statements
+pytest                          # Run tests
+pytest --cov                    # Run tests with coverage
+pytest -k "pattern"             # Run tests matching pattern
+pytest -v                       # Verbose output
+pytest -s                       # Show print statements
 
 # Prek (pre-commit replacement)
-prek -a                          # Run all hooks manually
-prek run <hook-id>               # Run specific hook
+prek -a                         # Run all hooks manually
+prek run <hook-id>              # Run specific hook
 
 # Git workflow
 git add .
-git commit -m "feat: message"    # Hooks run automatically
+git commit -m "feat: message"   # Hooks run automatically
+
+# Package management
+uv add <package>                # Add a package
+uv add --dev <package>          # Add a package to dev
+uv lock                         # Check the lockfile matches the pyproject.toml (and update if different)
+uv update                       # Update all pacakges in the lockfile
+uv tree                         # Print the dependencies tree
 ```
 
 ## Development environment
@@ -188,9 +195,11 @@ prek install
 
 Verify environment:
 ```bash
-uv run python --version
+python --version
 prek -a
 ```
+
+## Dependency management notes
 
 {AGENT: If CLAUDE, keep this Claude Code integration section, else delete}
 ## Claude Code integration
@@ -339,7 +348,7 @@ def add(a: int, b: int) -> int:
 Configuration: `.pre-commit-config.yaml`
 
 Hooks enabled:
-{AGENT: read .pre-commit-config.yaml and update list of hooks here}
+{AGENT: read .pre-commit-config.yaml and update list of hooks with ids and versions here}
 
 1. check-yaml - Validate YAML syntax
 2. check-toml - Validate TOML syntax
@@ -380,10 +389,10 @@ Test matrix:
 Note: Matrix is intentionally minimal; expand if multi-version testing is needed.
 
 Checks performed:
-1. `uv run ruff format .` - format check
-2. `uv run ruff check .` - lint check
-3. `uv run ty check` - type check
-4. `uv run pytest --cov --cov-report=xml` - tests with coverage
+1. `ruff format .` - format check
+2. `ruff check .` - lint check
+3. `ty check` - type check
+4. `pytest --cov --cov-report=xml` - tests with coverage
 5. Upload coverage to Codecov
 
 Ensure local checks pass before pushing to avoid CI failures.
