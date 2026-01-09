@@ -17,7 +17,7 @@ dev = [
     "pytest>=8.4",
     "pytest-cov>=7.0",
     "ruff>=0.14",
-    "ty>=0.0.1a25",
+    "ty>=0.0.9",
 ]
 
 [tool.pixi.feature.dev.pypi-dependencies]
