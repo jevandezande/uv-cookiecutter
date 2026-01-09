@@ -94,6 +94,8 @@ def process_data(input_data: list[str], threshold: int = 10) -> dict[str, int]:
 Requirements
 - All functions must have complete type annotations
 - Use modern syntax: `list[str]`, `dict[str, int]` (not `List[str]`, `Dict[str, int]`)
+- Use `|` for union types (Python 3.10+): `str | None`
+- Import types from `typing` only when necessary (prefer built-ins)
 
 #### Verification
 ```bash
@@ -110,23 +112,33 @@ Via ruff
 - Trailing newline: required
 - No trailing whitespace
 
-### Pre-commit expectations
+### Naming conventions
+- Functions/methods: snake_case
+- Variables: snake_case
+- Constants: UPPER_SNAKE_CASE
+- Classes: PascalCase
+- Modules: snake_case
+- Private attributes/methods: _leading_underscore
 
-Pre-commit hooks run automatically on `git commit` and must pass before commit succeeds.
+### Imports
+- Absolute imports preferred
+- Group imports: standard library, third-party, local
+- No wildcard imports (`from module import *`) except in `__init__.py`
+- Import sorting handled by ruff (isort)
 
-If hooks fail:
-1. Read the error message carefully
-2. Fix the reported issues
-3. Re-stage any auto-fixed files: `git add .`
-4. Try committing again
+### Error handling
+- Use specific exceptions (ValueError, OSError, etc.) rather than generic Exception
+- Avoid bare `except:` clauses; catch specific exceptions
+- Use context managers (`with` statements) for resource management
+- Log errors appropriately using the `logging` module
+- Raise custom exceptions for domain-specific errors
 
-Hooks run these checks:
-- YAML/TOML validation
-- End-of-file and trailing whitespace fixes
-- Ruff formatting
-- Ruff linting
-- Type checking (ty)
-- All tests (pytest)
+### General style
+- Use f-strings for string formatting (Python 3.6+)
+- Prefer list/dict comprehensions over loops when appropriate
+- Use `pathlib.Path` for file operations instead of `os.path`
+- Avoid global variables; use dependency injection
+- Write readable code; prefer explicit over implicit
 
 ## Repository overview
 
@@ -163,10 +175,9 @@ pytest                          # Run tests
 pytest --cov                    # Run tests with coverage
 pytest -k "pattern"             # Run tests matching pattern
 pytest -v                       # Verbose output
-pytest -s                       # Show print statements
 
 # Prek (pre-commit replacement)
-prek -a                         # Run all hooks manually
+prek -a                         # Run all hooks
 prek run <hook-id>              # Run specific hook
 
 # Git workflow
@@ -273,7 +284,7 @@ Ignored rules (globally):
 - `N806` - Non-lowercase variable in function (allows PascalCase variables)
 - `PLR0911` - Too many return statements
 - `PLR0912` - Too many branches
-- `PLR0913` - Too many arguments
+- `PLR0913` - Too many arguments to function call
 - `PLR0914` - Too many local variables
 - `PLR0915` - Too many statements
 - `PLR1702` - Too many nested blocks
@@ -301,8 +312,6 @@ Configuration:
 - Doctest normalization: `NORMALIZE_WHITESPACE` applied to all doctests (allows flexible spacing in examples)
 
 Both test files in `tests/` and docstring examples in source code are automatically discovered and run
-
-Use this table to quickly locate where settings are defined.
 
 ## Testing
 
@@ -367,8 +376,8 @@ Behavior:
 
 Manual execution:
 ```bash
-prek run -a                # All hooks
-prek run ruff-check        # Specific hook
+prek -a                 # All hooks
+prek run ruff-check     # Specific hook
 ```
 
 ## CI/CD
