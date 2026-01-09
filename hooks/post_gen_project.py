@@ -27,14 +27,14 @@ class CodingAgent(str, Enum):
 
 
 def call(cmd: str, check: bool = True, **kwargs: Any) -> subprocess.CompletedProcess[bytes]:
-    """
-    Call shell commands.
+    """Call shell commands.
 
-    :param cmd: command to call
-    :param check: whether to raise an exception if the command fails
-    :param kwargs: keyword arguments to pass to subprocess.call
-
-    Warning: strings with spaces are not yet supported.
+    Args:
+        cmd: command to call
+        check: whether to raise an exception if the command fails
+        kwargs: keyword arguments to pass to subprocess.call
+    Warning:
+        strings with spaces are not yet supported
     """
     logger.debug(f"Calling: {cmd}")
     return subprocess.run(cmd.split(), check=check, **kwargs)
@@ -62,10 +62,10 @@ def set_python_version() -> None:
 
 
 def set_license(license: str | None = "MIT") -> None:
-    """
-    Copy the license file to LICENSE (if any).
+    """Copy the license file to LICENSE (if any).
 
-    :param license: name of the license (or None for no license)
+    Args:
+        license: name of the license (or None for no license)
     """
     if not license or license == "None":
         logger.debug("No license set")
@@ -97,17 +97,17 @@ def git_init() -> None:
 
 
 def process_dependencies(deps: str) -> str:
-    r"""
-    Process a space separated list of dependencies.
+    r"""Process a space separated list of dependencies.
 
-    :param deps: dependencies to process
-    :param sep: separator between dependencies
-    :return: processed dependencies in the format '"package=version",\n...'
-
-    >>> process_dependencies(' ')
-    ''
-    >>> process_dependencies("pytest matplotlib~=3.7 black!=1.2.3")
-    '    "pytest",\n    "matplotlib~=3.7",\n    "black!=1.2.3",\n'
+    Args:
+        deps: dependencies to process
+    Returns:
+        processed dependencies in the format '"package=version",\n...'
+    Examples:
+        >>> process_dependencies(' ')
+        ''
+        >>> process_dependencies("pytest matplotlib~=3.7 black!=1.2.3")
+        '    "pytest",\n    "matplotlib~=3.7",\n    "black!=1.2.3",\n'
     """
     if not deps.strip():
         return ""
@@ -134,17 +134,18 @@ def update_dependencies() -> None:
 
 
 def check_program(program: str, install_str: str, **run_kwargs: Any) -> None:
-    """
-    Check that a program is installed.
+    """Check that a program is installed.
 
-    :param program: name of the program to check
-    :param install_str: string to print if the program is not installed
-
-    >>> check_program("python", "https://www.python.org")
-    >>> check_program("this_program_does_not_exist", "nothing")
-    Traceback (most recent call last):
-    ...
-    OSError: this_program_does_not_exist is not installed; install with `nothing`
+    Args:
+        program: name of the program to check
+        install_str: string to print if the program is not installed
+        run_kwargs: keyword arguments to pass to subprocess.call
+    Examples:
+        >>> check_program("python", "https://www.python.org")
+        >>> check_program("this_program_does_not_exist", "nothing")
+        Traceback (most recent call last):
+        ...
+        OSError: this_program_does_not_exist is not installed; install with `nothing`
     """
     try:
         call(program, stdout=subprocess.DEVNULL, **run_kwargs)
@@ -166,10 +167,10 @@ def git_hooks() -> None:
 
 
 def setup_coding_agent(agent: str) -> None:
-    """
-    Set up coding agent including readme and environment.
+    """Set up coding agent including readme and environment.
 
-    :param agent: coding agent name ("claude", "codex", or "none")
+    Args:
+        agent: coding agent name ("claude", "codex", or "none")
     """
     if agent.lower() == "none":
         return
@@ -229,11 +230,12 @@ def git_initial_commit() -> None:
 
 
 def setup_remote(remote: str = "origin") -> None:
-    """
-    Add remote (and optionally setup GitHub).
+    """Add remote (and optionally setup GitHub).
 
-    :param remote: name for the remote
-    :raises ValueError: if the privacy option is not valid
+    Args:
+        remote: name for the remote
+    Raises:
+        ValueError: if the privacy option is not valid
     """
     if "{{cookiecutter.github_setup}}" != "None":  # type: ignore [comparison-overlap]  # noqa: PLR0133
         github_setup("{{cookiecutter.github_setup}}", remote)
@@ -242,12 +244,12 @@ def setup_remote(remote: str = "origin") -> None:
 
 
 def git_add_remote(remote: str, url: str, protocol: PROTOCOL = "git") -> None:
-    """
-    Add a remote to the git repository.
+    """Add a remote to the git repository.
 
-    :param remote: name for the remote
-    :param url: url of remote
-    :param protocol: protocol of the remote ("git" or "https")
+    Args:
+        remote: name for the remote
+        url: url of remote
+        protocol: protocol of the remote ("git" or "https")
     """
     if protocol == "git":
         _, _, hostname, path = url.split("/", 3)
@@ -257,12 +259,12 @@ def git_add_remote(remote: str, url: str, protocol: PROTOCOL = "git") -> None:
 
 
 def github_setup(privacy: str, remote: str = "origin", default_branch: str = "master") -> None:
-    """
-    Make a repository on GitHub (requires GitHub CLI).
+    """Make a repository on GitHub (requires GitHub CLI).
 
-    :param privacy: privacy of the repository ("private", "internal", "public")
-    :param remote: name of the remote to add
-    :param default_branch: name of the default branch for upstream
+    Args:
+        privacy: privacy of the repository ("private", "internal", "public")
+        remote: name of the remote to add
+        default_branch: name of the default branch for upstream
     """
     if privacy not in GITHUB_PRIVACY_OPTIONS:
         raise ValueError(f"{privacy=} not in {GITHUB_PRIVACY_OPTIONS}")
