@@ -318,6 +318,8 @@ def main() -> None:
     """Run the post generation hooks."""
     set_python_version()
     set_license("{{cookiecutter.license}}")
+    if "{{cookiecutter.publish_on_pypi}}" == "True":  # noqa: PLR0133
+        Path(".github/workflows/publish.yml").unlink()
     git_init()
     update_dependencies()
     allow_direnv()
