@@ -244,6 +244,8 @@ def main() -> None:
     set_python_version()
     set_license("{{cookiecutter.license}}")
     remove_license_dir()
+    if "{{cookiecutter.publish_on_pypi}}" == "True":  # noqa: PLR0133
+        Path(".github/workflows/publish.yml").unlink()
     git_init()
     update_dependencies()
     allow_direnv()
