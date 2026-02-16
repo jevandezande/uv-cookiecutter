@@ -1,6 +1,7 @@
 # AI Agent Development Guide
 
-This document provides essential guidance for AI agents working on this repository. It covers tooling, conventions, and workflows needed to contribute effectively.
+This document provides essential guidance for AI agents working on this repository.
+It covers tooling, conventions, and workflows needed to contribute effectively.
 
 ## How to use this document
 
@@ -145,7 +146,7 @@ Via ruff
 Purpose: {AGENT must read from README.md and confirm with user}
 
 Structure:
-- `{{cookiecutter.package_name}}` - source code (this is a flat layout)
+- `{{cookiecutter.package_name}}/` - source code (this is a flat layout)
 - `tests/` - test suite
 - `.github/workflows/` - CI/CD configuration
 - {AGENT: list other important folders and confirm with user}
@@ -348,8 +349,8 @@ def add(a: int, b: int) -> int:
 
 {AGENT: read .coveragerc and update configuration summary here}
 
-- Source `{{cookiecutter.package_name}}`
-- Omitted `{{cookiecutter.package_name}}/__main__.py`
+- Source: `{{cookiecutter.package_name}}`
+- Omitted: `{{cookiecutter.package_name}}/__main__.py`
 - Excluded lines: `pragma: no cover`, `__repr__`, `if self.debug`, `raise AssertionError`, `raise NotImplementedError`, `if 0:`, `if __name__ == "__main__":`, ellipsis-only lines (`...`)
 
 ## Prek hooks
@@ -359,14 +360,17 @@ Configuration: `.pre-commit-config.yaml`
 Hooks enabled:
 {AGENT: read .pre-commit-config.yaml and update list of hooks with ids and versions here}
 
-1. check-yaml - Validate YAML syntax
-2. check-toml - Validate TOML syntax
-3. end-of-file-fixer - Ensure single newline at EOF
-4. trailing-whitespace - Remove trailing whitespace
-5. ruff-format - Format Python code
-6. ruff-check - Lint Python code
-7. ty - Type check Python code
-8. pytest - Run test suite
+From `pre-commit/pre-commit-hooks` (v6.0.0):
+`check-yaml` - Validate YAML syntax
+`check-toml` - Validate TOML syntax
+`end-of-file-fixer` - Ensure single newline at EOF
+`trailing-whitespace` - Remove trailing whitespace
+
+Local hooks:
+`ruff` (ruff-format) - Format Python code
+`ruff` (ruff-check) - Lint Python code
+`ty` - Type check Python code
+`pytest` - Run test suite
 
 Behavior:
 - Stages: `pre-commit` and `pre-push`
