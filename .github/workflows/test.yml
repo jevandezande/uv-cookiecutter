@@ -52,4 +52,4 @@ jobs:
         run: |
           cd ../uv_project
           direnv allow .
-          uv run pre-commit run --all-files
+          uv run prek -a

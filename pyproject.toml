@@ -13,7 +13,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "prek>=0.2",
+    "prek>=0.3.2",
     "pytest>=8.4",
     "pytest-cov>=7.0",
     "ruff>=0.14",

@@ -4,7 +4,7 @@
       "Bash(ruff:*)",
       "Bash(ty:*)",
       "Bash(pytest:*)",
-      "Bash(pre-commit run -a:*)",
+      "Bash(prek -a:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git switch -c:*)",
