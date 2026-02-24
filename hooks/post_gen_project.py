@@ -325,8 +325,8 @@ def main() -> None:
     allow_direnv()
     git_hooks()
     setup_coding_agent_files("{{cookiecutter.coding_agent}}")
-    remove_data_dir()
     setup_coding_agent("{{cookiecutter.coding_agent}}")
+    remove_data_dir()
     git_initial_commit()
     setup_remote("origin")
 
