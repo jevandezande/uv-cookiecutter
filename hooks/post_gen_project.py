@@ -250,7 +250,7 @@ def setup_remote(remote: str = "origin") -> None:
     Raises:
         ValueError: if the privacy option is not valid
     """
-    if "{{cookiecutter.github_setup}}" != "None":  # type: ignore [comparison-overlap]  # noqa: PLR0133
+    if "{{cookiecutter.github_setup}}" != "None":  # noqa: PLR0133
         github_setup("{{cookiecutter.github_setup}}", remote)
     else:
         git_add_remote(remote, "{{cookiecutter.project_url}}")

@@ -13,15 +13,12 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "prek>=0.3.2",
-    "pytest>=8.4",
-    "pytest-cov>=7.0",
-    "ruff>=0.14",
-    "ty>=0.0.9",
+    "prek>=0.3.4",
+    "pytest>=9",
+    "pytest-cov>=7",
+    "ruff>=0.15",
+    "ty>=0.0.21",
 ]
-
-[tool.pixi.feature.dev.pypi-dependencies]
-ty = "*"
 
 [tool.ruff]
 extend-exclude = ["\\{\\{cookiecutter.package_name\\}\\}"]
@@ -48,6 +45,7 @@ select = [
     "ICN001", # unconventional-import-alias
 ]
 ignore = [
+    "RUF001",  # Ambiguous n-dash
     "N806", # Non-lowercase variable in function
     "PLR0911", # Too many returns
     "PLR0912", # Too many branches
@@ -55,6 +53,8 @@ ignore = [
     "PLR0914", # Too many locals
     "PLR0915", # Too many statements
     "PLR1702", # Too many nested-blocks
+    "PT013",   # Incorrect import of pytest
+    "PLR2004", # Magic value used in comparison
 ]
 
 [tool.ruff.lint.per-file-ignores]
