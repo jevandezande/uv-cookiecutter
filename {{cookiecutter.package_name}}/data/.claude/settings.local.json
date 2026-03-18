@@ -5,12 +5,11 @@
       "Bash(ty:*)",
       "Bash(pytest:*)",
       "Bash(prek -a:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git switch -c:*)",
       "Bash(find:*)",
       "Bash(ls:*)",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "Bash(uv run:*)",
+      "Bash(uv sync:*)"
     ],
     "deny": [],
     "ask": []
