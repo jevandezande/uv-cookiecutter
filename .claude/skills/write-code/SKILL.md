@@ -44,6 +44,15 @@ Via ruff
 - Line length: 100
 - Indentation: 4 spaces (no tabs except Makefiles)
 
+### Naming conventions
+
+- Functions/methods: snake_case
+- Variables: snake_case
+- Constants: UPPER_SNAKE_CASE
+- Classes: PascalCase
+- Modules: snake_case
+- Private attributes/methods: _leading_underscore
+
 ### Imports
 - Absolute imports preferred
 - Group imports: standard library, third-party, local
@@ -159,6 +168,29 @@ Use skill `write-docstrings`
 - prek documentation: https://prek.j178.dev
 - Google docstring style: https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings
 
+
+## Troubleshooting
+
+### Prek hook failures
+
+Formatting issues:
+- Usually auto-fixed by ruff
+- Re-stage files: `git add .`
+- Try committing again
+
+Lint issues:
+- Read error message for specific rule
+- Fix; if `# noqa: <rule>` if absolutely necessary, ask before adding
+
+Type issues:
+- Add missing type annotations
+- Fix type mismatches
+- Use `ty check` to verify locally
+
+Test failures:
+- Fix failing tests or code
+- Run `pytest -v` for detailed output
+- Run specific test: `pytest tests/test_file.py::test_name`
 
 ## Miscellaneous
 
