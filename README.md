@@ -41,6 +41,7 @@ The cookiecutter will automagically
 - Initialize git
 - Setup environment
 - Setup pre-commit and pre-push hooks
+- Setup your preferred coding agent (if any)
 - Make initial commit
 - Sets up remote on GitHub (optional)
 
