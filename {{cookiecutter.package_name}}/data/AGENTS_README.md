@@ -1,6 +1,6 @@
 # AI Agent Development Guide
 
-This document provides essential guidance for AI agents working on this repository.
+This file provides guidance to AI agents working with code in this repository.
 It covers tooling, conventions, and workflows needed to contribute effectively.
 
 ## How to use this document
@@ -30,7 +30,7 @@ It covers tooling, conventions, and workflows needed to contribute effectively.
 
 ## AI Skills
 
-This project uses Claude Skills. You must use the `skill` tool to load `write-code`, `write-docstrings`, and `write-tests` for detailed instructions on conventions, formatting, tests, and git workflows. Do not make code changes without consulting the relevant skills.
+This project uses Claude Skills. Use the `skill` tool to load `write-code`, `write-docstrings`, and `write-tests` for detailed instructions on conventions, formatting, tests, and git workflows. Do not make code changes without consulting the relevant skills.
 
 ## When in doubt
 - Check the skills loaded via the `skill` tool
@@ -44,25 +44,19 @@ Purpose: {AGENT must read from README.md and confirm with user}
 Structure:
 - `{{cookiecutter.package_name}}/` - source code (this is a flat layout)
 - `tests/` - test suite
-- `.github/workflows/` - CI/CD configuration
+- `.github/workflows/` - CI/CD (test + publish)
 - {AGENT: list other important folders and confirm with user}
 
 Python Version: {AGENT: read from pyproject.toml}
 
 Key configuration files:
-- `pyproject.toml` - Project metadata, dependencies, all tool configuration
-- `.pre-commit-config.yaml` - Prek hook configuration
-- `.coveragerc` - Test coverage settings
-- `.editorconfig` - Editor formatting settings
+- `pyproject.toml` - project metadata, dependencies, all tool configuration
+- `prek.toml` - Prek hook configuration
+- `.coveragerc` - test coverage settings
+- `.editorconfig` - editor formatting settings
 
 {AGENT: If CLAUDE, keep this Claude Code integration section, else delete}
 ## Claude Code integration
-
-This project includes Claude Code configuration for AI-assisted development.
-
-### Configuration files
-
-- `.claude/settings.local.json` - Claude permissions and hooks
 
 ### Auto-formatting hooks
 
@@ -70,7 +64,7 @@ Claude is configured with PostToolUse hooks that run automatically after Edit or
 1. `ruff format .` - Formats all code
 2. `ruff check . --fix` - Applies auto-fixable linting corrections
 
-Effect: When Claude modifies files, formatting and basic lints are applied immediately, reducing pre-commit friction.
+File edits trigger automatic formatting — no manual `ruff format` needed. Pre-commit checks still run on commit.
 
 To modify permissions, edit `.claude/settings.local.json`.
 
