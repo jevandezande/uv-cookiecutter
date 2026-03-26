@@ -53,4 +53,4 @@ The cookiecutter will automagically
 
 Read [notes](notes.md) for more tips.
 
-This package is derived from the [pixi-cookiecutter](https://github.com/jevandezande/pixi-cookiecutter), which is a great alternative if you prefer something that can natively handle conda packages.
+If you need packages from conda or multi-language support, check out `pixi` and the [pixi-cookiecutter](https://github.com/jevandezande/pixi-cookiecutter).

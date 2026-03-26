@@ -75,8 +75,8 @@ markers = [
 ]
 
 [build-system]
-requires = ["hatchling"]
 build-backend = "hatchling.build"
+requires = ["hatchling"]
 
 [tool.hatch.build.targets.wheel]
 include = ["{{cookiecutter.package_name}}"]

@@ -1,8 +1,8 @@
 [project]
 name = "uv_cookiecutter"
 description = "Cookiecutter for setting up python projects with uv that just work"
-license = {file = "LICENSE"}
-version = "0.0.1"
+license = "MIT"
+version = "0.1.0"
 readme = "README.md"
 keywords = ["cookiecutter", "uv"]
 authors = [{name = "Jonathon Vandezande"}]
