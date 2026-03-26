@@ -34,6 +34,6 @@ Python Version: >=3.13
 
 Key configuration files:
 - `pyproject.toml` - Project metadata, dependencies, all tool configuration
-- `.pre-commit-config.yaml` - Prek hook configuration
+- `prek.toml` - Prek hook configuration
 - `.coveragerc` - Test coverage settings
 - `.editorconfig` - Editor formatting settings
