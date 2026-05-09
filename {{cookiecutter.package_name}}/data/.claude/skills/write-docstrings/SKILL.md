@@ -9,11 +9,13 @@ argument-hint: "[source code]"
 Required for: all public modules, classes, functions, and methods
 
 ## Format: Google-style
+
 1. Do not place type information in docstrings - use type annotations only
 2. Do not use leading articles in parameter, return, and error descriptions "a", "an", or "the"
 3. Only use single backticks (e.g. `Spam`, not ``Spam``)
 
 ## Example
+
 ```python
 def process_spam(input_data: list[tuple[str, int]], threshold: int = 2) -> dict[str, int]:
     """Process spam counts, dropping those below threshold
@@ -35,6 +37,7 @@ def process_spam(input_data: list[tuple[str, int]], threshold: int = 2) -> dict[
 ```
 
 ## Incorrect example (do not do this!)
+
 ```python
 def process_spam(input_data: list[tuple[str, int]], threshold: int = 2) -> dict[str, int]:
     """Process spam counts, dropping those below threshold
