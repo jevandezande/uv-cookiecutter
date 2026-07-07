@@ -74,10 +74,12 @@ Via ruff
 - Use f-strings for string formatting
 - Prefer list/dict comprehensions over loops when appropriate
 - Use `pathlib.Path` for file operations instead of `os.path`
-- Use dataclasses and prefer the settings `slots=True` and `frozen=True`.
+- Use dataclasses and prefer the settings `slots=True` and `frozen=True`
 - Don't use `.0` to indicate floats
 - Prefer `strict=True` in `zip` and `itertools.batched`
 - Use a guard case in all `match`/`case` statements (i.e. `case _:`)
+- Don't use the filename `types.py` as it conflicts with a builtin library
+- Avoid using `cast` to achieve the correct type
 
 ## Essential commands
 
@@ -167,12 +169,13 @@ Use skill `write-docstrings`
 
 ## Additional resources
 
-- uv documentation: <https://docs.astral.sh/uv>
-- ruff documentation: <https://docs.astral.sh/ruff>
-- ty documentation: <https://github.com/astral-sh/ty>
-- pytest documentation: <https://docs.pytest.org>
-- prek documentation: <https://prek.j178.dev>
-- Google docstring style: <https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings>
+- [uv](https://docs.astral.sh/uv)
+- [pixi](https://pixi.sh)
+- [ruff](https://docs.astral.sh/ruff)
+- [ty](https://github.com/astral-sh/ty)
+- [pytest](https://docs.pytest.org)
+- [prek](https://prek.j178.dev)
+- [Google docstring style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings)
 
 ## Troubleshooting
 

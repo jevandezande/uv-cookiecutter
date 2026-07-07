@@ -16,7 +16,9 @@ Follow these conventions when writing or modifying tests in this codebase.
 
 ## File and Function Structure
 
-Tests live in `tests/` within each package. Name files `test_<module>.py`. Use plain functions — never classes:
+Tests live in `tests/` within each package.
+Name files `test_<module>.py`.
+Use plain functions, never classes:
 
 ```python
 """Tests for the Spam."""
@@ -35,6 +37,7 @@ def test_classic_spam() -> None:
 
 - Add a module-level docstring to every test file.
 - Give each test function a Google-style one-line docstring.
+- Define module-level structure constants (e.g., `water`) for reuse across multiple tests. Don't reload them inside tests.
 
 ## Float Comparisons
 
