@@ -85,6 +85,8 @@ def set_license(license: str | None = "MIT") -> None:
     with open("LICENSE") as f:
         contents = f.read().replace("{year}", f"{datetime.now().year}")
         contents = contents.replace("{author_name}", "{{cookiecutter.author_name}}")
+
+    contents = "\n".join(line.rstrip() for line in contents.split("\n"))
     with open("LICENSE", "w") as f:
         f.write(contents)
 
@@ -270,7 +272,11 @@ def notes() -> None:
         """
 If using GitHub, generate a CODECOV_TOKEN at:
 https://app.codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}/settings
-and add it to the GitHub repository secrets as CODECOV_TOKEN at:
+
+If publishing to PyPI, generate a PYPI_API_TOKEN at:
+https://pypi.org/manage/account/token/
+
+and add them to the GitHub repository secrets at:
 https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}/settings/secrets/actions
 """
     )
@@ -284,7 +290,7 @@ def main() -> None:
     """Run the post generation hooks."""
     set_python_version()
     set_license("{{cookiecutter.license}}")
-    if "{{cookiecutter.publish_on_pypi}}" == "True":  # noqa: PLR0133
+    if "{{cookiecutter.publish_on_pypi}}" == "No":  # noqa: PLR0133
         Path(".github/workflows/publish.yml").unlink()
     git_init()
     update_dependencies()

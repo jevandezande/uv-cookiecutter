@@ -7,6 +7,16 @@ from re import match
 def main() -> None:
     """Run the hooks."""
     check_module_name("{{cookiecutter.package_name}}")
+    check_line_length("{{cookiecutter.line_length}}")
+
+
+def check_line_length(line_length: str) -> None:
+    """Check that the line length is an integer."""
+    try:
+        if int(line_length) < 80:
+            raise ValueError(f"{line_length=} is too short (80 is the minimum).")
+    except ValueError as e:
+        raise ValueError(f"{line_length=} is not an integer.") from e
 
 
 def check_module_name(module_name: str) -> None:

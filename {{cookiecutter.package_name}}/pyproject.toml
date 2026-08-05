@@ -7,7 +7,9 @@ license = "{{cookiecutter.license}}"
 version = "0.0.1"
 readme = "README.md"
 keywords = []
+{%- if cookiecutter.author_name %}
 authors = [{name = "{{cookiecutter.author_name}}"}]
+{%- endif %}
 requires-python = ">={python_version}"
 dependencies = [
     {dependencies}
@@ -72,6 +74,21 @@ addopts = "--doctest-modules --durations=5 -m 'not regression'"
 doctest_optionflags = "NORMALIZE_WHITESPACE"
 markers = [
     "regression: tests to make sure bugs stay closed",
+]
+
+[tool.coverage.run]
+source = ["{{cookiecutter.package_name}}"]
+
+[tool.coverage.report]
+exclude_lines = [
+    'pragma: no cover',
+    'def __repr__',
+    'if self\.debug',
+    'raise AssertionError',
+    'raise NotImplementedError',
+    'if 0:',
+    'if __name__ == .__main__.:',
+    '^\s*\.\.\.',
 ]
 
 [build-system]
