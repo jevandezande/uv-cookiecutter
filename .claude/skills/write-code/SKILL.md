@@ -113,7 +113,7 @@ Run `direnv allow .` if you see permission errors.
 
 ## Testing
 
-- Use pytest; tests live in `tests/`; doctests are auto-discovered in source
+- Use pytest; tests live in `hooks/`; doctests are auto-discovered in source
 - Use standard pytest format (e.g. don't use classes to hold tests)
 - For float comparisons, use `approx` or `assert_almost_equal` (imported as `aae`), prefer default thresholds
 
@@ -121,7 +121,9 @@ See the skill `write-tests` for more detail, but only if actively writing tests
 
 ## CI/CD
 
-CI runs `ruff format`, `ruff check`, `ty check`, and `pytest` per-package via GitHub Actions.
+CI runs the non-mutating `ruff format --check --diff`, `ruff check`, `rumdl fmt --check --diff`,
+`rumdl check`, `ty check`, and `pytest` commands via GitHub Actions. Run `prek -a` to reproduce most
+of the set locally.
 
 ## Git development guidelines
 

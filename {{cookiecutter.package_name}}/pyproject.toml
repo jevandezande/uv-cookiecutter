@@ -26,6 +26,7 @@ dev = [
 ]
 
 [tool.ruff]
+extend-exclude = ["*.md"]
 line-length = {{cookiecutter.line_length}}
 
 [tool.ruff.lint]

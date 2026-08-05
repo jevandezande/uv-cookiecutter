@@ -22,7 +22,6 @@ dev = [
 ]
 
 [tool.ruff]
-# *.md keeps ruff from reformatting Python code blocks in documentation
 extend-exclude = ["\\{\\{cookiecutter.package_name\\}\\}", "*.md"]
 line-length = 100
 

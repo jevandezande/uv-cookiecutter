@@ -12,7 +12,7 @@ Use this skill when writing, reviewing, or editing code.
 
 The goal of this document is to provide guidance when coding in this repository. All code should be pythonic and easy to read.
 
-Python version: >=3.13
+Python version: see `requires-python` in `pyproject.toml`
 
 ## Before every commit
 
@@ -121,7 +121,9 @@ See the skill `write-tests` for more detail, but only if actively writing tests
 
 ## CI/CD
 
-CI runs `ruff format`, `ruff check`, `ty check`, and `pytest` per-package via GitHub Actions.
+CI runs the non-mutating `ruff format --check --diff`, `ruff check`, `rumdl fmt --check --diff`,
+`rumdl check`, `ty check`, and `pytest` commands via GitHub Actions. Run `prek -a` to reproduce most
+of the set locally.
 
 ## Git development guidelines
 
