@@ -1,18 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ruff:*)",
-      "Bash(ty:*)",
-      "Bash(pytest:*)",
+      "Bash(uv run:*)",
+      "Bash(uv sync:*)",
       "Bash(prek -a:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git switch -c:*)",
       "Bash(find:*)",
       "Bash(ls:*)",
-      "Bash(rg:*)",
-      "Bash(uv run:*)",
-      "Bash(uv sync:*)"
+      "Bash(rg:*)"
     ],
     "deny": [],
     "ask": []
@@ -24,12 +21,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "ruff format .",
+            "command": "uv run ruff format .",
             "statusMessage": "Formatting with ruff"
           },
           {
             "type": "command",
-            "command": "ruff check . --fix",
+            "command": "uv run ruff check . --fix",
             "statusMessage": "Running ruff checks"
           }
         ]

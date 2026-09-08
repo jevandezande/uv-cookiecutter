@@ -13,13 +13,18 @@ It covers tooling, conventions, and workflows needed to contribute effectively.
 
 ## AI Skills
 
-This project uses Claude Skills. You must use the `skill` tool to load `write-code`, `write-docstrings`, and `write-tests` for detailed instructions on conventions, formatting, tests, and git workflows. Do not make code changes without consulting the relevant skills.
+This project uses Claude Skills. Use the `skill` tool to load `write-code`, `write-docstrings`, and `write-tests` for detailed instructions on conventions, formatting, tests, and git workflows. Do not make code changes without consulting the relevant skills.
 
 ## When in doubt
 
 - Check the skills loaded via the `skill` tool
 - Run individual tools to identify issues
 - Ask user for clarification on ambiguous requirements
+
+## Template testing notes
+
+Full generation is not side-effect free; When `github_setup` is not `"None"`,
+`gh repo create` is run, which creates a repository on GitHub.
 
 ## Repository overview
 
