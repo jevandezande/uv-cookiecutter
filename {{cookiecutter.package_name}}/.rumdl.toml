@@ -7,7 +7,6 @@ disable = [
 
 exclude = [
     ".git",
-    ".pixi",
     "node_modules",
     "vendor",
     "dist",

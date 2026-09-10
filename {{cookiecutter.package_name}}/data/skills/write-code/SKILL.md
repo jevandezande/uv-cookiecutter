@@ -172,7 +172,6 @@ Use skill `write-docstrings`
 ## Additional resources
 
 - [uv](https://docs.astral.sh/uv)
-- [pixi](https://pixi.sh)
 - [ruff](https://docs.astral.sh/ruff)
 - [ty](https://github.com/astral-sh/ty)
 - [pytest](https://docs.pytest.org)

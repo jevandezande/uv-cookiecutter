@@ -175,7 +175,7 @@ def check_program(program: str, install_str: str, **run_kwargs: Any) -> None:
 
 def allow_direnv() -> None:
     """Allow direnv."""
-    check_program("direnv", "pixi global install direnv")
+    check_program("direnv", "curl -sfL https://direnv.net/install.sh | bash")
     call("direnv allow .")
 
 

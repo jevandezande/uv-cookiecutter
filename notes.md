@@ -30,7 +30,7 @@ act schedule
 #### Installing act
 
 ```sh
-pixi global install act
+brew install act
 ```
 
 ### Direnv
@@ -40,7 +40,7 @@ pixi global install act
 #### Installing direnv
 
 ```sh
-pixi global install direnv
+curl -sfL https://direnv.net/install.sh | bash
 ```
 
 Warning: if installed simultaneously from multiple sources, bad things can happen.
@@ -81,7 +81,7 @@ Prek comes installed with the uv package, but if you want to install it
 globally:
 
 ```sh
-pixi global install prek
+uv tool install prek
 ```
 
 ### Alternative installation methods
@@ -89,8 +89,6 @@ pixi global install prek
 #### Act
 
 ```sh
-# Brew
-brew install act
 # GitHub-CLI
 gh extension install nektos/gh-act
 ```
