@@ -1,19 +1,4 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(uv run:*)",
-      "Bash(uv sync:*)",
-      "Bash(prek -a:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git switch -c:*)",
-      "Bash(find:*)",
-      "Bash(ls:*)",
-      "Bash(rg:*)"
-    ],
-    "deny": [],
-    "ask": []
-  },
   "hooks": {
     "PostToolUse": [
       {
