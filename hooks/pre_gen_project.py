@@ -30,8 +30,10 @@ def check_line_length(line_length: str) -> None:
 
     Args:
         line_length: line length to check
+
     Raises:
         ValueError: if the line length is not an integer or is too short
+
     Examples:
         >>> check_line_length("100")
         >>> check_line_length("60")
@@ -57,8 +59,10 @@ def check_python_version(python_version: str) -> None:
 
     Args:
         python_version: python version to check
+
     Raises:
         ValueError: if the version is not a `major.minor` version of Python 3
+
     Examples:
         >>> check_python_version("3.14")
         >>> check_python_version("3.14.2")
@@ -156,8 +160,10 @@ def check_module_name(module_name: str) -> None:
 
     Args:
         module_name: name of the module to check
+
     Raises:
         ValueError: if module name is not a valid Python module name
+
     Examples:
         >>> check_module_name("valid_module_name")
         >>> check_module_name("valid_module_name2")

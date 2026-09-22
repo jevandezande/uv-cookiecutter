@@ -34,6 +34,7 @@ def call(cmd: str, check: bool = True, **kwargs: Any) -> subprocess.CompletedPro
         cmd: command to call
         check: whether to raise an exception if the command fails
         kwargs: keyword arguments to pass to subprocess.call
+
     Warning:
         strings with spaces are not yet supported
     """
@@ -116,8 +117,10 @@ def process_dependencies(deps: str) -> str:
 
     Args:
         deps: dependencies to process
+
     Returns:
         processed dependencies in the format '"package=version",\n...'
+
     Examples:
         >>> process_dependencies(' ')
         ''
@@ -157,6 +160,7 @@ def check_program(program: str, install_str: str, **run_kwargs: Any) -> None:
         program: name of the program to check
         install_str: string to print if the program is not installed
         run_kwargs: keyword arguments to pass to subprocess.call
+
     Examples:
         >>> check_program("python", "https://www.python.org")  # doctest: +SKIP
         >>> check_program("this_program_does_not_exist", "nothing")  # doctest: +SKIP
@@ -275,8 +279,10 @@ def valid_remote_url(url: str) -> bool:
 
     Args:
         url: url of the remote
+
     Returns:
         whether the url is complete enough to use as a remote
+
     Examples:
         >>> valid_remote_url("https://github.com/octocat/repo")
         True
@@ -352,7 +358,7 @@ def notes() -> None:
     if not "{{cookiecutter.github_username}}":
         return
 
-    print(
+    logger.info(
         """
 If using GitHub, generate a CODECOV_TOKEN at:
 https://app.codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}/settings
@@ -389,7 +395,7 @@ def main() -> None:
 
     notes()
 
-    print(f"{SUCCESS}Project successfully initialized{TERMINATOR}")
+    logger.info(f"{SUCCESS}Project successfully initialized{TERMINATOR}")
 
 
 if __name__ == "__main__":

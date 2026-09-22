@@ -7,12 +7,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run ruff format .",
+            "command": "uv run --no-sync ruff format .",
             "statusMessage": "Formatting with ruff"
           },
           {
             "type": "command",
-            "command": "uv run ruff check . --fix",
+            "command": "uv run --no-sync ruff check . --fix",
             "statusMessage": "Running ruff checks"
           }
         ]

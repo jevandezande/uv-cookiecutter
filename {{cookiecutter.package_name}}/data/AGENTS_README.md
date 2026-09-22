@@ -58,8 +58,8 @@ Key configuration files:
 
 Claude is configured with PostToolUse hooks that run automatically after Edit or Write operations:
 
-1. `uv run ruff format .` - Formats all code
-2. `uv run ruff check . --fix` - Applies auto-fixable linting corrections
+1. `uv run --no-sync ruff format .` - Formats all code
+2. `uv run --no-sync ruff check . --fix` - Applies auto-fixable linting corrections
 
 File edits trigger automatic formatting — no manual `ruff format` needed. Pre-commit checks still run on commit.
 
