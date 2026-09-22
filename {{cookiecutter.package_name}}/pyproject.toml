@@ -23,6 +23,7 @@ dev = [
     "ruff>=0.15",
     "rumdl>=0.1.91",
     "ty>=0.0.34",
+    {dev_dependencies}
 ]
 
 [tool.ruff]

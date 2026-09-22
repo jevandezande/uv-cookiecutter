@@ -53,6 +53,25 @@ def call(cmd: str, check: bool = True, **kwargs: Any) -> subprocess.CompletedPro
     return subprocess.run(cmd.split(), check=check, **kwargs)
 
 
+def read_write(file_name: str, old: str, new: str) -> None:
+    """Replace all occurrences of a substring in a file.
+
+    Args:
+        file_name: file to modify
+        old: substring to replace
+        new: replacement substring
+
+    Raises:
+        ValueError: `old` is not in the file, so a renamed placeholder cannot pass silently
+    """
+    path = Path(file_name)
+    contents = path.read_text(encoding="utf-8")
+    if old not in contents:
+        raise ValueError(f"{old!r} not found in {file_name}")
+
+    path.write_text(contents.replace(old, new), encoding="utf-8")
+
+
 def set_python_version(python_version: str) -> None:
     """Set the python version in pyproject.toml and .github/workflows/test.yml.
 
@@ -61,14 +80,8 @@ def set_python_version(python_version: str) -> None:
     """
     logger.info(f"Setting {python_version=}")
 
-    paths = [
-        Path(".github/workflows/test.yml"),
-        Path("pyproject.toml"),
-    ]
-
-    for path in paths:
-        contents = path.read_text(encoding="utf-8")
-        path.write_text(contents.replace("{python_version}", python_version), encoding="utf-8")
+    for file_name in (".github/workflows/test.yml", "pyproject.toml"):
+        read_write(file_name, "{python_version}", python_version)
 
 
 def set_license(license: str | None = "MIT") -> None:
@@ -134,19 +147,22 @@ def process_dependencies(deps: str) -> str:
     return "".join(f'    "{dep}",\n' for dep in deps.split())
 
 
-def update_dependencies() -> None:
-    """Add and update the dependencies in pyproject.toml and uv.lock."""
+def update_dependencies(
     # Extra space and .strip() avoids accidentally creating '""""'
-    dependencies = process_dependencies("""{{cookiecutter.dependencies}} """.strip())
-    dev_dependencies = process_dependencies("""{{cookiecutter.dev_dependencies}} """.strip())
+    deps: str = """{{cookiecutter.dependencies}} """.strip(),
+    dev_deps: str = """{{cookiecutter.dev_dependencies}} """.strip(),
+) -> None:
+    """Add and update the dependencies in pyproject.toml and uv.lock.
 
-    pyproject = Path("pyproject.toml")
-    contents = (
-        pyproject.read_text(encoding="utf-8")
-        .replace("    {dependencies}\n", dependencies)
-        .replace("    {dev_dependencies}\n", dev_dependencies)
-    )
-    pyproject.write_text(contents, encoding="utf-8")
+    Args:
+        deps: space separated runtime dependencies
+        dev_deps: space separated dev dependencies
+    """
+    dependencies = process_dependencies(deps)
+    dev_dependencies = process_dependencies(dev_deps)
+
+    read_write("pyproject.toml", "    {dependencies}\n", dependencies)
+    read_write("pyproject.toml", "    {dev_dependencies}\n", dev_dependencies)
 
     call("uv sync")
 
