@@ -13,13 +13,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  hooks:
     strategy:
       matrix:
         python-version: ['3.13', '3.14']
         os: [ubuntu-latest]
 
-    name: Python ${{ matrix.os }} ${{ matrix.python-version }}
+    name: Hooks ${{ matrix.os }} ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -36,13 +36,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --locked
 
-      - run: curl -sfL https://direnv.net/install.sh | bash
-
       - name: Check TOML/YAML/whitespace
         run: |
           uv run -- prek run --all-files --show-diff-on-failure --color=always \
             check-toml \
             check-yaml \
+            check-merge-conflict \
             trailing-whitespace \
             end-of-file-fixer
 
@@ -61,6 +60,46 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+  generate:
+    name: Generate ${{ matrix.name }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # github_setup stays None everywhere: anything else creates a real repository
+        include:
+          - name: defaults
+            license: MIT
+            publish_on_pypi: 'No'
+            coding_agent: None
+          # The only leg with dependencies, and the only one keeping publish.yml
+          - name: PyPI, Claude, with dependencies
+            license: Apache-2.0
+            publish_on_pypi: 'Yes'
+            coding_agent: Claude
+            dependencies: numpy
+            dev_dependencies: pytest-xdist>=3.6
+          - name: BSD-3-Clause, Codex
+            license: BSD-3-Clause
+            publish_on_pypi: 'No'
+            coding_agent: Codex
+          # No LICENSE file, and no license in pyproject.toml
+          - name: unlicensed
+            license: None
+            publish_on_pypi: 'No'
+            coding_agent: None
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+
+      - run: curl -sfL https://direnv.net/install.sh | bash
+
       - name: Configure git
         run: |
           git config --global user.email "default@example.com"
@@ -68,10 +107,42 @@ jobs:
           git config --global init.defaultBranch master
 
       - name: Run cookiecutter
-        run: uvx cookiecutter . --no-input --config-file template_config.yml -o ..
-
-      - name: Move to new package and run checks
         run: |
-          cd ../uv_project
+          uvx cookiecutter . --no-input --config-file template_config.yml -o .. \
+            license="${{ matrix.license }}" \
+            publish_on_pypi="${{ matrix.publish_on_pypi }}" \
+            coding_agent="${{ matrix.coding_agent }}" \
+            dependencies="${{ matrix.dependencies }}" \
+            dev_dependencies="${{ matrix.dev_dependencies }}"
+
+      - name: Check the generated project
+        working-directory: ../uv_project
+        run: |
           direnv allow .
           uv run prek run -a --stage pre-push
+
+      - name: Check the files the options select
+        working-directory: ../uv_project
+        run: |
+          test -f AGENTS.md
+          if [ "${{ matrix.license }}" = "None" ]; then
+            test ! -f LICENSE
+          else
+            test -f LICENSE
+          fi
+          if [ "${{ matrix.publish_on_pypi }}" = "Yes" ]; then
+            test -f .github/workflows/publish.yml
+          else
+            test ! -f .github/workflows/publish.yml
+          fi
+          if [ "${{ matrix.coding_agent }}" = "None" ]; then
+            test ! -d .claude
+          else
+            test -f .claude/skills/write-code/SKILL.md
+          fi
+          test ! -f CLAUDE.md
+          if [ "${{ matrix.coding_agent }}" = "Claude" ]; then
+            test -f .claude/settings.json
+          else
+            test ! -f .claude/settings.json
+          fi
