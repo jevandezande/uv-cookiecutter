@@ -23,7 +23,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v10.2.0
@@ -57,7 +57,7 @@ jobs:
       - run: uv run pytest --cov --cov-report=xml
 
       - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v7
+        uses: codecov/codecov-action@v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
