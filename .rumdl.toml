@@ -7,6 +7,7 @@ disable = [
 
 exclude = [
     ".git",
+    ".venv",
     "node_modules",
     "vendor",
     "dist",
@@ -18,5 +19,4 @@ respect-gitignore = true
 
 [per-file-ignores]
 # Skill files start with frontmatter, not headings
-".claude/**/*.md" = ["MD041"]
-"**/data/skills/**/*.md" = ["MD041"]
+"**/skills/**/*.md" = ["MD041"]
