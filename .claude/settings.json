@@ -9,6 +9,11 @@
             "type": "command",
             "command": "uv run --no-sync ruff format --quiet",
             "statusMessage": "Formatting with ruff"
+          },
+          {
+            "type": "command",
+            "command": "uv run --no-sync ruff check --fix --quiet",
+            "statusMessage": "Running ruff checks"
           }
         ]
       }
