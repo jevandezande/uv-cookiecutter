@@ -18,7 +18,7 @@ Python version: >=3.13
 
 - Ensure all code has type annotations
 - Add Google-style docstrings (NO types, NO leading articles)
-- Run checks: `prek -a`
+- Run checks: `prek run -a --stage pre-push` (tests run at pre-push, not pre-commit)
 - Prek hooks will run automatically and must pass
 
 ## Code conventions
@@ -93,7 +93,7 @@ prek install                    # Install git hooks
 ruff format .                   # Format code
 ruff check .                    # Lint code
 ty check                        # Type check
-prek -a                         # Run all prek hooks
+prek run -a --stage pre-push    # Run all prek hooks, tests included
 prek run <hook-id>              # Run specific hook
 
 # Testing
@@ -122,8 +122,8 @@ See the skill `write-tests` for more detail, but only if actively writing tests
 ## CI/CD
 
 CI runs the non-mutating `ruff format --check --diff`, `ruff check`, `rumdl fmt --check --diff`,
-`rumdl check`, `ty check`, and `pytest` commands via GitHub Actions. Run `prek -a` to reproduce most
-of the set locally.
+`rumdl check`, `ty check`, and `pytest` commands via GitHub Actions. Run `prek run -a --stage pre-push` to
+reproduce the set locally.
 
 ## Git development guidelines
 
