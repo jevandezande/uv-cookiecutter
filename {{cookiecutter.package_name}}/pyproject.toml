@@ -79,6 +79,7 @@ markers = [
 
 [tool.coverage.run]
 source = ["{{cookiecutter.package_name}}"]
+omit = ["{{cookiecutter.package_name}}/__main__.py"]
 
 [tool.coverage.report]
 exclude_lines = [
