@@ -74,4 +74,4 @@ jobs:
         run: |
           cd ../uv_project
           direnv allow .
-          uv run prek -a
+          uv run prek run -a --stage pre-push

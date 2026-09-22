@@ -261,7 +261,7 @@ def verify_generated_project() -> None:
     commit.
     """
     call("git add .")
-    if call("uv run prek run -a", check=False).returncode:
+    if call("uv run prek run -a --stage pre-push", check=False).returncode:
         logger.warning("Generated project fails its own hooks; see above")
 
 
