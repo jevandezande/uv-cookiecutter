@@ -8,7 +8,7 @@
     "dev_dependencies": "",
     "python_version": "3.14",
     "line_length": "100",
-    "license": ["MIT", "Apache-2.0", "BSD-3-clause", "None"],
+    "license": ["MIT", "Apache-2.0", "BSD-3-Clause", "None"],
     "publish_on_pypi": ["No", "Yes"],
     "github_setup": ["None", "private", "internal", "public"],
     "coding_agent": ["None", "Claude", "Codex"],
