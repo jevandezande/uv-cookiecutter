@@ -1,10 +1,10 @@
 # UV Cookiecutter
 
 [![License](https://img.shields.io/github/license/jevandezande/uv-cookiecutter)](https://github.com/jevandezande/uv-cookiecutter/blob/master/LICENSE)
-[![Powered by: uv](https://img.shields.io/badge/-uv-purple)](https://docs.astral.sh/uv)
-[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://docs.astral.sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Markdown style: rumdl](https://img.shields.io/badge/md%20style-rumdl-000000.svg)](https://rumdl.dev)
-[![Typing: ty](https://img.shields.io/badge/typing-ty-EFC621.svg)](https://github.com/astral-sh/ty)
+[![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ty)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jevandezande/uv-cookiecutter/test.yml?branch=master&logo=github-actions)](https://github.com/jevandezande/uv-cookiecutter/actions/)
 [![Codecov](https://img.shields.io/codecov/c/github/jevandezande/uv-cookiecutter/master)](https://app.codecov.io/github/jevandezande/uv-cookiecutter/branch/master)
 
