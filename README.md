@@ -6,7 +6,7 @@
 [![Markdown style: rumdl](https://img.shields.io/badge/md%20style-rumdl-000000.svg)](https://rumdl.dev)
 [![Typing: ty](https://img.shields.io/badge/typing-ty-EFC621.svg)](https://github.com/astral-sh/ty)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jevandezande/uv-cookiecutter/test.yml?branch=master&logo=github-actions)](https://github.com/jevandezande/uv-cookiecutter/actions/)
-[![Codecov](https://img.shields.io/codecov/c/github/jevandezande/uv-cookiecutter)](https://app.codecov.io/github/jevandezande/uv-cookiecutter)
+[![Codecov](https://img.shields.io/codecov/c/github/jevandezande/uv-cookiecutter/master)](https://app.codecov.io/github/jevandezande/uv-cookiecutter/branch/master)
 
 [Cookiecutter](https://github.com/audreyr/cookiecutter) for setting up [uv](https://docs.astral.sh/uv) projects with all the necessary features for modern python development.
 
