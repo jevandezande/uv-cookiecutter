@@ -30,13 +30,15 @@ class CodingAgent(StrEnum):
 def call(cmd: str, check: bool = True, **kwargs: Any) -> subprocess.CompletedProcess[bytes]:
     """Call shell commands.
 
+    Strings with spaces are not supported.
+
     Args:
         cmd: command to call
         check: whether to raise an exception if the command fails
-        kwargs: keyword arguments to pass to subprocess.call
+        kwargs: keyword arguments to pass to subprocess.run
 
-    Warning:
-        strings with spaces are not yet supported
+    Returns:
+        Completed process
     """
     logger.debug(f"Calling: {cmd}")
     return subprocess.run(cmd.split(), check=check, **kwargs)
@@ -80,7 +82,7 @@ def set_license(license_name: str) -> None:
         license_name: SPDX identifier of the license (or "None" for no license)
 
     Raises:
-        ValueError: if license is not available
+        ValueError: license is not available
     """
     if license_name == "None":
         logger.debug("No license set")
@@ -119,7 +121,7 @@ def process_dependencies(deps: str) -> str:
         deps: dependencies to process
 
     Returns:
-        processed dependencies in the format '"package=version",\n...'
+        Processed dependencies in the format '"package=version",\n...'
 
     Examples:
         >>> process_dependencies(' ')
@@ -159,7 +161,10 @@ def check_program(program: str, install_str: str, **run_kwargs: Any) -> None:
     Args:
         program: name of the program to check
         install_str: string to print if the program is not installed
-        run_kwargs: keyword arguments to pass to subprocess.call
+        run_kwargs: keyword arguments to pass to subprocess.run
+
+    Raises:
+        OSError: program is not installed, or running it fails
 
     Examples:
         >>> check_program("python", "https://www.python.org")  # doctest: +SKIP
@@ -177,7 +182,7 @@ def check_program(program: str, install_str: str, **run_kwargs: Any) -> None:
 
 
 def check_prerequisites(github_setup: str = "{{cookiecutter.github_setup}}") -> None:
-    """Check that the tools generation needs are installed, before anything is built.
+    """Check that generation's tools are installed before anything is built.
 
     Args:
         github_setup: privacy of the GitHub repository to create, or "None" to skip the CLI check
@@ -209,7 +214,7 @@ def setup_coding_agent_files(agent: str) -> None:
         agent: coding agent name ("claude", "codex", or "none")
 
     Raises:
-        ValueError: if coding agent is not supported
+        ValueError: coding agent is not supported
     """
     coding_agent = CodingAgent(agent.lower())
     shutil.copy(Path("data/AGENTS_README.md"), Path("AGENTS.md"))
@@ -262,6 +267,7 @@ def setup_remote(remote: str = "origin") -> None:
     Args:
         remote: name for the remote
     """
+    # Ruff sees the unrendered cookiecutter tag as a constant.
     if "{{cookiecutter.github_setup}}" != "None":  # noqa: PLR0133
         github_setup("{{cookiecutter.github_setup}}", remote)
         return
@@ -281,7 +287,7 @@ def valid_remote_url(url: str) -> bool:
         url: url of the remote
 
     Returns:
-        whether the url is complete enough to use as a remote
+        Whether the url is complete enough to use as a remote
 
     Examples:
         >>> valid_remote_url("https://github.com/octocat/repo")
@@ -333,7 +339,7 @@ def github_setup(
         name: name of the repository
 
     Raises:
-        ValueError: if privacy option is not valid
+        ValueError: privacy option is not valid
     """
     if privacy not in GITHUB_PRIVACY_OPTIONS:
         raise ValueError(f"{privacy=} not in {GITHUB_PRIVACY_OPTIONS}")
@@ -354,7 +360,7 @@ def github_setup(
 
 
 def notes() -> None:
-    """Print notes for the user (if hosted on GitHub)."""
+    """Print notes for the user when a GitHub username is set."""
     if not "{{cookiecutter.github_username}}":
         return
 
