@@ -13,12 +13,12 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "prek>=0.3.13",
-    "pytest>=9",
-    "pytest-cov>=7",
-    "ruff>=0.15",
-    "rumdl>=0.1.91",
-    "ty>=0.0.34",
+    "prek>=0.5.3",
+    "pytest>=9.1",
+    "pytest-cov>=7.1",
+    "ruff>=0.16.8",
+    "rumdl>=0.2.77",
+    "ty>=0.0.83",
 ]
 
 [tool.ruff]

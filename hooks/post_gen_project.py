@@ -359,21 +359,29 @@ def github_setup(
         logger.error(f"Error setting upstream to {default_branch}: {e}")
 
 
-def notes() -> None:
-    """Print notes for the user when a GitHub username is set."""
-    if not "{{cookiecutter.github_username}}":
+def notes(
+    github_username: str = "{{cookiecutter.github_username}}",
+    package_name: str = "{{cookiecutter.package_name}}",
+) -> None:
+    """Print notes for the user when a GitHub username is set.
+
+    Args:
+        github_username: GitHub username
+        package_name: name of the package
+    """
+    if not github_username:
         return
 
     logger.info(
-        """
+        f"""
 If using GitHub, generate a CODECOV_TOKEN at:
-https://app.codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}/settings
+https://app.codecov.io/gh/{github_username}/{package_name}/settings
 
 If publishing to PyPI, generate a PYPI_API_TOKEN at:
 https://pypi.org/manage/account/token/
 
 and add them to the GitHub repository secrets at:
-https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}/settings/secrets/actions
+https://github.com/{github_username}/{package_name}/settings/secrets/actions
 """
     )
 
