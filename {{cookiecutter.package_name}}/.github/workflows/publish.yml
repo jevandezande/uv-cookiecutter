@@ -26,18 +26,36 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v10.2.0
+        with:
+          version: '0.11.23'
 
       - name: Install Python 3.13
         run: uv python install 3.13
 
+      - name: Export locked dependencies
+        run: |
+          uv lock --check
+          uv export --locked --only-group build --no-emit-project \
+            --format requirements.txt --output-file "$RUNNER_TEMP/build-constraints.txt"
+          uv export --locked --no-default-groups --group smoke --no-emit-project \
+            --format requirements.txt --output-file "$RUNNER_TEMP/smoke-requirements.txt"
+
       - name: Build
-        run: uv build
+        run: uv build --python 3.13 --build-constraint "$RUNNER_TEMP/build-constraints.txt" --require-hashes
 
       - name: Smoke test (wheel)
-        run: uv run --isolated --no-project --with dist/*.whl --with "pytest" python -m pytest
+        run: |
+          uv run --isolated --no-project --python 3.13 \
+            --with-requirements "$RUNNER_TEMP/smoke-requirements.txt" \
+            --with dist/*.whl python -m pytest
 
       - name: Smoke test (source distribution)
-        run: uv run --isolated --no-project --with dist/*.tar.gz --with "pytest" python -m pytest
+        env:
+          UV_BUILD_CONSTRAINT: ${{ runner.temp }}/build-constraints.txt
+        run: |
+          uv run --isolated --no-project --python 3.13 \
+            --with-requirements "$RUNNER_TEMP/smoke-requirements.txt" \
+            --with dist/*.tar.gz python -m pytest
 
       - name: Publish
         run: uv publish --token ${{ secrets.PYPI_API_TOKEN }}

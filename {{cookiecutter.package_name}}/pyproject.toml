@@ -17,6 +17,7 @@ dependencies = [
 ]
 
 [dependency-groups]
+build = ["hatchling"]
 dev = [
     "prek>=0.5.3",
     "pytest>=9.1",
@@ -26,6 +27,7 @@ dev = [
     "ty>=0.0.83",
     {dev_dependencies}
 ]
+smoke = ["pytest>=9.1"]
 
 [tool.ruff]
 extend-exclude = ["*.md"]
