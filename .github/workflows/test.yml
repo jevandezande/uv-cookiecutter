@@ -98,7 +98,7 @@ jobs:
         with:
           enable-cache: true
 
-      - run: curl -sfL https://direnv.net/install.sh | bash
+      - run: sudo apt-get update && sudo apt-get install -y direnv
 
       - name: Configure git
         run: |
